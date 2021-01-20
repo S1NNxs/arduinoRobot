@@ -14,9 +14,6 @@ class USonic
   public:
   USonic(int trigPin, int echoPin);
   unsigned long Distance();
-  
-  
- 
     
   private:
   int _trigPin;
@@ -26,20 +23,15 @@ class USonic
   unsigned long _previousMicros = 0;
   const int ON_TIME = 10;
   const int OFF_TIME = 2;
-  const int TIMEOUT = 1000; 
-  unsigned long _measure;
-  unsigned long _duration;
+  const int TIMEOUT = 1000;
   unsigned long _currentTime;
-  unsigned long _distance;
+  unsigned int _distance;
   int _trigState = LOW;
   int _state = START_SEND;
+  unsigned long _measure;
+  unsigned long _duration;
   
-  
-
- 
 };
-
-
 
 
 #endif

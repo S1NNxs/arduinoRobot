@@ -18,6 +18,7 @@
   int _trigState = LOW;
   int _state = START_SEND;
   unsigned long _measure;
+  unsigned long _duration;
   
 void setup() {
   
@@ -30,7 +31,7 @@ void setup() {
 unsigned long distance(){
 
     
-    unsigned long _duration;
+    
     
   switch(_state){
     
