@@ -1,9 +1,9 @@
-<<<<<<< HEAD
 #include "Arduino.h"
 #include "UltraSonic.h"
 
 
-USonic::USonic(int trigPin, int echoPin)
+
+USonic::USonic(int trigPin, int echoPin) //Ultraäänietäisyysmittarin asetukset (TRIG, ECHO)
 {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -11,59 +11,59 @@ USonic::USonic(int trigPin, int echoPin)
   _trigPin = trigPin;
   _echoPin = echoPin;
   }
-  
-long duration;
-int distance;
-
-USonic::Distance(){
-	
-//Code for ultrasonic module
-// Clears the trigPin
-digitalWrite(_trigPin, LOW);
-delayMicroseconds(2);
-// Sets the trigPin on HIGH state for 10 micro seconds
-digitalWrite(_trigPin, HIGH);
-delayMicroseconds(10);
-digitalWrite(_trigPin, LOW);
-// Reads the echoPin, returns the sound wave travel time in microseconds
-duration = pulseIn(_echoPin, HIGH);
-// Calculating the distance
-distance= duration*0.034/2;
-// Prints the distance on the Serial Monitor
-return distance; 
-}
-=======
-#include "Arduino.h"
-#include "UltraSonic.h"
 
 
-USonic::USonic(int trigPin, int echoPin)
+unsigned long USonic::Distance()
 {
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
 
-  _trigPin = trigPin;
-  _echoPin = echoPin;
-  }
-  
-long duration;
-int distance;
-
-USonic::Distance(){
-	
-//Code for ultrasonic module
-// Clears the trigPin
-digitalWrite(_trigPin, LOW);
-delayMicroseconds(2);
-// Sets the trigPin on HIGH state for 10 micro seconds
-digitalWrite(_trigPin, HIGH);
-delayMicroseconds(10);
-digitalWrite(_trigPin, LOW);
-// Reads the echoPin, returns the sound wave travel time in microseconds
-duration = pulseIn(_echoPin, HIGH);
-// Calculating the distance
-distance= duration*0.034/2;
-// Prints the distance on the Serial Monitor
-return distance; 
+    
+    switch(_state){
+    
+    case START_SEND:
+    _currentTime = millis();
+    _distance = 0;
+    digitalWrite(_trigPin, LOW);
+    _currentMicros = micros();
+    if(_currentMicros - _previousMicros >= OFF_TIME){
+      _previousMicros = _currentMicros;         //  
+      _state = END_SEND;
+    }
+    break;
+    
+    case END_SEND:
+    _currentMicros = micros();
+    digitalWrite(_trigPin, HIGH);                   
+    if(_currentMicros - _previousMicros >= ON_TIME){ 
+      _previousMicros = _currentMicros;               
+      digitalWrite(_trigPin, LOW);
+      _state = START_RECEIVE;
+    }
+    break;
+    
+    case START_RECEIVE:
+    if(digitalRead(_echoPin) == HIGH){
+    _measure = micros();
+    _state = END_RECIEVE;
+    }
+    break;
+    
+    case END_RECIEVE:
+    if(digitalRead(_echoPin) == LOW){
+      _duration = (micros() - _measure);
+      _distance = _duration * 0.034/2;
+      _state = START_SEND;
+    }
+    break;
+    
 }
->>>>>>> 1b5bc16bd089aec3a92494c572e35a5836c0ef35
+
+if(millis()-_currentTime>=TIMEOUT){
+ _state = START_SEND;
+ }
+ 
+  
+    return _distance;
+    
+  }
+
+ 

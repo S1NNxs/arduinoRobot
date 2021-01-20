@@ -1,49 +1,28 @@
-<<<<<<< HEAD
 #ifndef MotorShield_h
 #define MotorShield_h
 
 #include "Arduino.h"
 
-const int FORWARD=LOW;
-const int BACKWARD=HIGH;
 
-class Motor{
+const bool FORWARD = false; //vaihtaa "reverce" muttujan "LOW" tai "false" FORWARD:ksi
+const bool BACKWARD = true; //vaihtaa "reverce" muttujan "HIGH" tai "true" BACKWARD:ksi
+
+
+class Motor{ 
 	public:
-	Motor(int pwmCtl, int directCtl);
+	Motor(int pwmCtl, int directCtl, int balance);
 	Control(int speed, bool reverse);
+  
 	
 	private:
-	int _pwmCtl;
-	int _directCtl;
-	int _speed;
-	int _reverse;
+	int _pwmCtl; //PWM pinni
+	int _directCtl; //Direct pinni
+	int _speed; //PWM muttuja, nopeudensäätö
+	int _reverse; //Suunnanvaito
+  int _balance; //Nopeuden hidastuvuus
 	
 };
 
 
-#endif
-=======
-#ifndef MotorShield_h
-#define MotorShield_h
-
-#include "Arduino.h"
-
-const int FORWARD=LOW;
-const int BACKWARD=HIGH;
-
-class Motor{
-	public:
-	Motor(int pwmCtl, int directCtl);
-	Control(int speed, bool reverse);
-	
-	private:
-	int _pwmCtl;
-	int _directCtl;
-	int _speed;
-	int _reverse;
-	
-};
-
 
 #endif
->>>>>>> 1b5bc16bd089aec3a92494c572e35a5836c0ef35

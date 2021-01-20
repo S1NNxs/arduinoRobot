@@ -1,21 +1,21 @@
-<<<<<<< HEAD
 #include "Arduino.h"
 #include "MotorShield.h"
 
-Motor::Motor(int pwmCtl, int directCtl)
+Motor::Motor(int pwmCtl, int directCtl, int balance) //Mootorin asetukset (PWM pin, DIRECT pin, BALANCE) "balance" - hidastuvuus jos pyörät pyöri epätasaisesti.
 {
 	pinMode(pwmCtl, OUTPUT);
 	pinMode(directCtl, OUTPUT);
 	
-	_pwmCtl=pwmCtl;
-	_directCtl=directCtl;
+	_pwmCtl=pwmCtl; //Nopeuden säätö "Control" fuktiolle
+	_directCtl=directCtl; //Sunnanvaihto "Control" fuktiolle
+  _balance=balance; //Nopeudensäätö: hidastuvuus "Control" fuktiolle
+  
 	
 }
 
-
-
+//Ohjaa nopeuden ja sunnanvaihto 
 Motor::Control(int speed, bool reverse) {
-  analogWrite(_pwmCtl, speed);
+  analogWrite(_pwmCtl, speed - _balance);
   if (reverse)  {
     digitalWrite(_directCtl, BACKWARD);
   }
@@ -23,29 +23,3 @@ Motor::Control(int speed, bool reverse) {
     digitalWrite(_directCtl, FORWARD);
   }
 }
-=======
-#include "Arduino.h"
-#include "MotorShield.h"
-
-Motor::Motor(int pwmCtl, int directCtl)
-{
-	pinMode(pwmCtl, OUTPUT);
-	pinMode(directCtl, OUTPUT);
-	
-	_pwmCtl=pwmCtl;
-	_directCtl=directCtl;
-	
-}
-
-
-
-Motor::Control(int speed, bool reverse) {
-  analogWrite(_pwmCtl, speed);
-  if (reverse)  {
-    digitalWrite(_directCtl, BACKWARD);
-  }
-  else  {
-    digitalWrite(_directCtl, FORWARD);
-  }
-}
->>>>>>> 1b5bc16bd089aec3a92494c572e35a5836c0ef35
