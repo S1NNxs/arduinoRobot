@@ -11,7 +11,7 @@ const bool BACKWARD = true; //vaihtaa "reverce" muttujan "HIGH" tai "true" BACKW
 class Motor{ 
 	public:
 	Motor(int pwmCtl, int directCtl, int balance);
-	void Control(int speed, bool reverse);
+	Control(int speed, bool reverse);
   
 	
 	private:

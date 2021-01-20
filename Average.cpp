@@ -3,20 +3,23 @@
 
 
 
-Average::Average(unsigned long value){ //parametrit(Muuttuja)
+Average::Average(unsigned long value,unsigned int arrSize){ //parametrit(Muuttuja, taulukon koko
 
+arrSize = _arrSize;
+
+*ptrArr = new unsigned int[_arrSize]; //uusi dyynaminen taulukko
 for (int count = 0; count< _arrSize; count++){ //dyynaminen taulukon täyttö
-  _distVal[count] = value;
+  ptrArr[count] = value;
   }
 }
 
-unsigned long Average::Calculate(unsigned long x){ //poista vanhemmin arvo taulukosta ja kirjoitaa uuden.
+unsigned long Average::Calculate(unsigned long x){
   unsigned long sum = 0;
-  _distVal[_index++] = x;
+  ptrArr[_index++] = x;
   if(_index == _arrSize){_index = 0;}
   for (int count = 0; count< _arrSize; count++){//lukeminen taulokosta ja laskeminen luvuen summa.
-  sum = sum + _distVal[count];
+  sum = sum + ptrArr[count];
   }
-  unsigned long average = sum/_arrSize; //laske keskiarvo
+  unsigned long average = sum/_arrSize;
   return average;
   }

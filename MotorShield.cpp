@@ -6,20 +6,20 @@ Motor::Motor(int pwmCtl, int directCtl, int balance) //Mootorin asetukset (PWM p
 	pinMode(pwmCtl, OUTPUT);
 	pinMode(directCtl, OUTPUT);
 	
-	_pwmCtl=pwmCtl; //Nopeuden säätö kopio "Control" fuktiolle
-	_directCtl=directCtl; //Sunnanvaihto kopio "Control" fuktiolle
-  _balance=balance; //Nopeudensäätö: hidastuvuus kopio "Control" fuktiolle
+	_pwmCtl=pwmCtl; //Nopeuden säätö "Control" fuktiolle
+	_directCtl=directCtl; //Sunnanvaihto "Control" fuktiolle
+  _balance=balance; //Nopeudensäätö: hidastuvuus "Control" fuktiolle
   
 	
 }
 
 //Ohjaa nopeuden ja sunnanvaihto 
-void Motor::Control(int speed, bool reverse) { //Ota nopeude ja pyörimissunnan parametrit
-  analogWrite(_pwmCtl, speed - _balance); //Lähettää ne parametrit moottorin ohjaukseen
+Motor::Control(int speed, bool reverse) {
+  analogWrite(_pwmCtl, speed - _balance);
   if (reverse)  {
-    digitalWrite(_directCtl, FORWARD); //tarkista onko pyörimissuunta kellon suuntaan vastaava
+    digitalWrite(_directCtl, BACKWARD);
   }
   else  {
-    digitalWrite(_directCtl, BACKWARD); s
+    digitalWrite(_directCtl, FORWARD);
   }
 }
